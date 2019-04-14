@@ -43,28 +43,38 @@ class _ToDoScreenState extends State<ToDoScreen> {
         children: <Widget>[
           new Flexible(
             child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
-              reverse: false,
+              padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+              // reverse: false,
               itemCount: _itemList.length,
               itemBuilder: (context, int index) {
-                return Card(
-                  color: Colors.white10,
-                  child: new ListTile(
-                    title: _itemList[index],
-                    onLongPress: () => _updateToDoList(_itemList[index], index),
-                    trailing: Listener(
-                      key: Key(_itemList[index].itemName),
-                      child: Icon(
-                        Icons.remove_circle,
-                        color: Colors.redAccent,
+                return Dismissible(
+                    background: Container(color: Colors.red),
+                    key: Key(_itemList[index].itemName),
+                    child: Card(
+                      margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                      color: Colors.white10,
+                      child: new ListTile(
+                        title: _itemList[index],
+                        onLongPress: () =>
+                            _updateToDoList(_itemList[index], index),
+                        trailing: Listener(
+                          key: Key(_itemList[index].itemName +
+                              _itemList[index].toString()),
+                          child: Icon(
+                            Icons.remove_circle,
+                            color: Colors.redAccent,
+                          ),
+                          onPointerDown: (pointerEvent) {
+                            _deleteToDoList(_itemList[index].id, index);
+                            _snackBar("Item Deleted!");
+                          },
+                        ),
                       ),
-                      onPointerDown: (pointerEvent) {
-                        _deleteToDoList(_itemList[index].id, index);
-                        _snackBar("Item Deleted!");
-                      },
                     ),
-                  ),
-                );
+                    onDismissed: (direction) {
+                      _deleteToDoList(_itemList[index].id, index);
+                      _snackBar("Item Deleted!");
+                    });
               },
             ),
           ),
@@ -137,8 +147,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
         // ToDoItem toDoItem = ToDoItem.map(item);
         setState(() {
           _itemList.add(ToDoItem.map(item));
-          // print("Items: ${toDoItem.itemName}");
-          _snackBar("not null");
         });
       });
     }
