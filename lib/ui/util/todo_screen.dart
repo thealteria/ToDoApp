@@ -48,7 +48,22 @@ class _ToDoScreenState extends State<ToDoScreen> {
               itemCount: _itemList.length,
               itemBuilder: (context, int index) {
                 return Dismissible(
-                    background: Container(color: Colors.red),
+                    // background: Container(
+                    //   padding: EdgeInsets.all(8.0),
+                    //   color: Colors.blue,
+                    //   child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child: Text("Debug",
+                    //           style: TextStyle(color: Colors.black))),
+                    // ),
+                    background: Container(
+                      padding: EdgeInsets.all(8.0),
+                      color: Colors.red,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Icon(Icons.remove_circle),
+                      ),
+                    ),
                     key: Key(_itemList[index].itemName),
                     child: Card(
                       margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
@@ -57,23 +72,25 @@ class _ToDoScreenState extends State<ToDoScreen> {
                         title: _itemList[index],
                         onLongPress: () =>
                             _updateToDoList(_itemList[index], index),
-                        trailing: Listener(
-                          key: Key(_itemList[index].itemName +
-                              _itemList[index].toString()),
-                          child: Icon(
-                            Icons.remove_circle,
-                            color: Colors.redAccent,
-                          ),
-                          onPointerDown: (pointerEvent) {
-                            _deleteToDoList(_itemList[index].id, index);
-                            _snackBar("Item Deleted!");
-                          },
-                        ),
+                        // trailing: Listener(
+                        //   key: Key(_itemList[index].itemName +
+                        //       _itemList[index].toString()),
+                        //   child: Icon(
+                        //     Icons.remove_circle,
+                        //     color: Colors.redAccent,
+                        //   ),
+                        //   onPointerDown: (pointerEvent) {
+                        //     _deleteToDoList(_itemList[index].id, index);
+                        //     _snackBar("Item Deleted!");
+                        //   },
+                        // ),
                       ),
                     ),
-                    onDismissed: (direction) {
-                      _deleteToDoList(_itemList[index].id, index);
-                      _snackBar("Item Deleted!");
+                    onDismissed: (DismissDirection direction) {
+                      // if (direction == DismissDirection.endToStart) {
+                        _deleteToDoList(_itemList[index].id, index);
+                        _snackBar("Item Deleted!");
+                      // }
                     });
               },
             ),
