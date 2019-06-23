@@ -1,6 +1,6 @@
 # ToDoApp
 
-ToDoApp is an open-source android applictaion made using [Flutter](https://flutter.dev/) which allows user to save notes in a very easy way.
+ToDoApp is an open-source android application made using [Flutter](https://flutter.dev/) which allows user to save notes in a very easy way.
 
 ## Features 
 
